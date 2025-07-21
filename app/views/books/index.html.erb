@@ -4,13 +4,28 @@
 
 <h1>Books</h1>
 
+<div style="display: flex; align-items: center; gap: 8px;">
+  <input type="text" id="search-title" placeholder="タイトルで検索" value="<%= params[:q] %>">
+  <button id="search-btn">検索</button>
+</div>
+
 <div id="books">
-  <% @books.each do |book| %>
-    <%= render book %>
-    <p>
-      <%= link_to "Show this book", book %>
-    </p>
-  <% end %>
+  <%= render partial: "books_list", locals: { books: @books } %>
 </div>
 
 <%= link_to "New book", new_book_path %>
+
+<script>
+document.getElementById('search-btn').onclick = function() {
+  const q = document.getElementById('search-title').value;
+  const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  fetch(`/books?q=${encodeURIComponent(q)}`, {
+    headers: {
+      'Accept': 'text/javascript',
+      'X-CSRF-Token': token
+    }
+  })
+    .then(res => res.text())
+    .then(js => eval(js));
+};
+</script>

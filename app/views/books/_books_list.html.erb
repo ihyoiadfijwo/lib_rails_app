@@ -1,0 +1,6 @@
+<% books.each do |book| %>
+  <div style="display: flex; align-items: center; margin-bottom: 8px;">
+    <%= render partial: "book", locals: { book: book } %>
+    <%= link_to "詳細", book_path(book), style: "margin-left: 16px;" %>
+  </div>
+<% end %>

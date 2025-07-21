@@ -7,3 +7,7 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+Book.create!(title: "Ruby入門", author: "山田太郎", isbn: "1234567890", category: "プログラミング", total_copies: 5)
+Book.create!(title: "Railsガイド", author: "佐藤花子", isbn: "0987654321", category: "Web", total_copies: 3)
+Book.create!(title: "JavaScript超入門", author: "田中一郎", isbn: "1122334455", category: "プログラミング", total_copies: 7)
