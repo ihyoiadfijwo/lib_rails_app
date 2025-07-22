@@ -1,0 +1,21 @@
+<%= stylesheet_link_tag 'login', media: 'all', 'data-turbolinks-track': "reload" %>
+<div class="login-container">
+  <h1>ログイン</h1>
+
+  <%= form_with url: login_path, method: :post, local: true, class: "login-form" do |form| %>
+    <div>
+      <%= form.label :student_no, "学籍番号" %>
+      <%= form.text_field :student_no, placeholder: "20250001", class: "form-control" %>
+    </div>
+    <div>
+      <%= form.label :password, "パスワード" %>
+      <%= form.password_field :password, class: "form-control" %>
+    </div>
+    <div>
+      <%= form.submit "ログイン", class: "btn btn-primary" %>
+    </div>
+    <% if flash[:alert] %>
+      <p class="alert"><%= flash[:alert] %></p>
+    <% end %>
+  <% end %>
+</div>

@@ -1,11 +1,17 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, :set_book, only: %i[ show edit update destroy ]
   protect_from_forgery except: :index
 
   # GET /books or /books.json
   def index
-    if params[:q].present?
-      @books = Book.where("title LIKE ?", "%#{params[:q]}%")
+    @categories = Book.distinct.pluck(:category)
+
+    if params[:q].present? || params[:category].present?
+      query = params[:q]
+      category = params[:category]
+
+      @books = Book.where("title LIKE :query OR author LIKE :query", query: "%#{query}%")
+      @books = @books.where(category: category) if category.present?
     else
       @books = Book.all
     end

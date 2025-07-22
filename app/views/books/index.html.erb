@@ -5,8 +5,13 @@
 <h1>Books</h1>
 
 <div style="display: flex; align-items: center; gap: 8px;">
-  <input type="text" id="search-title" placeholder="タイトルで検索" value="<%= params[:q] %>">
-  <button id="search-btn">検索</button>
+  <%= form_with url: books_path, method: :get, local: false do |form| %>
+    <div style ="display: flex; align-items: center; gap: 8px;">
+      <%= form.text_field :q, value: params[:q], placeholder: "タイトル・著者で検索", style: "flex: 1;" %>
+      <%= form.select :category, options_for_select(@categories, params[:category]), include_blank: true, style: "flex: 1;" %>
+      <%= form.submit "検索", style: "flex: 0;" %>
+    </div>
+  <% end %>
 </div>
 
 <div id="books">
@@ -16,16 +21,22 @@
 <%= link_to "New book", new_book_path %>
 
 <script>
-document.getElementById('search-btn').onclick = function() {
-  const q = document.getElementById('search-title').value;
+document.querySelector('form').onsubmit = function(event) {
+  event.preventDefault(); // フォームのデフォルト送信を防ぐ
+
+  const formData = new FormData(event.target); // フォームデータを取得
+  const query = formData.get('q'); // 検索ボックスの値
+  const category = formData.get('category'); // プルダウンの値
   const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-  fetch(`/books?q=${encodeURIComponent(q)}`, {
+
+  // Ajaxリクエストを送信
+  fetch(`/books?q=${encodeURIComponent(query)}&category=${encodeURIComponent(category)}`, {
     headers: {
       'Accept': 'text/javascript',
       'X-CSRF-Token': token
     }
   })
     .then(res => res.text())
-    .then(js => eval(js));
+    .then(js => eval(js)); // サーバーから返されたJSを実行
 };
 </script>
