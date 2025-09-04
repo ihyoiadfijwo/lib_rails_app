@@ -3,6 +3,9 @@
     Books
   </div>
   <div style="display: flex; gap: 16px;">
+    <% if current_user %>
+      <span style="margin-right: 24px;">ようこそ、<%= current_user.name %>さん</span>
+    <% end %>
     <%= link_to "リンク1", "#", style: "color: white; text-decoration: none;" %>
     <%= link_to "リンク2", "#", style: "color: white; text-decoration: none;" %>
     <%= link_to "リンク3", "#", style: "color: white; text-decoration: none;" %>

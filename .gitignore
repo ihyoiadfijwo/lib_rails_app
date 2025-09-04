@@ -32,3 +32,8 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# node.js
+/node_modules/*
+/package.json
+/package-lock.json
