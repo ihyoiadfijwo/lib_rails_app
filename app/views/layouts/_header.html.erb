@@ -6,8 +6,14 @@
     <% if current_user %>
       <span style="margin-right: 24px;">ようこそ、<%= current_user.name %>さん</span>
     <% end %>
-    <%= link_to "リンク1", "#", style: "color: white; text-decoration: none;" %>
-    <%= link_to "リンク2", "#", style: "color: white; text-decoration: none;" %>
-    <%= link_to "リンク3", "#", style: "color: white; text-decoration: none;" %>
+    <%= link_to "検索", books_path, style: "color: white; text-decoration: none;" %>
+    <% if current_user && current_user.role == "libadmin" %>
+      <%= link_to "ダッシュボード", "#", style: "color: white; text-decoration: none;" %>
+    <% end %>
+    <% if current_user %>
+      <%= link_to "ログアウト", logout_path, data: { turbo_method: "delete" }, style: "color: white; text-decoration: none;" %>
+    <% else %>
+      <%= link_to "ログイン", login_path, style: "color: white; text-decoration: none;" %>
+    <% end %>
   </div>
 </div>

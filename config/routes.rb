@@ -4,7 +4,12 @@ Rails.application.routes.draw do
   post 'login', to: 'users#login'
   delete 'logout', to: 'users#logout'
 
-  resources :books
+  resources :books do
+    member do
+      post :borrow
+      delete :return_book
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

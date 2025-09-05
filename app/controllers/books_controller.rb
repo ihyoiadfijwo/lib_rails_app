@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_action :authenticate_user!, :set_book, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, :set_book, only: %i[ show edit update destroy borrow return_book]
   protect_from_forgery except: :index
 
   # GET /books or /books.json
@@ -24,6 +24,7 @@ class BooksController < ApplicationController
 
   # GET /books/1 or /books/1.json
   def show
+    @book = Book.find(params[:id])
   end
 
   # GET /books/new
@@ -33,6 +34,27 @@ class BooksController < ApplicationController
 
   # GET /books/1/edit
   def edit
+  end
+
+  # POST /books/:id/borrow
+  def borrow
+    loan = @book.loans.new(user: current_user, borrowed_at: Date.today, due_at: Date.today + 7.days)
+    if loan.save
+      redirect_to @book, notice: "本を借りました。返却期限は#{loan.due_at}です。"
+    else
+      redirect_to @book, alert: "本を借りることができませんでした。"
+    end
+  end
+
+  # DELETE /books/:id/return
+  def return_book
+    loan = @book.loans.find_by(user: current_user)
+    if loan
+      loan.destroy
+      redirect_to @book, notice: "本を返却しました。"
+    else
+      redirect_to @book, alert: "返却する本が見つかりませんでした。"
+    end
   end
 
   # POST /books or /books.json
