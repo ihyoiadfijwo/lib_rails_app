@@ -16,6 +16,8 @@ class BooksController < ApplicationController
       @books = Book.all
     end
 
+    @borrowed_loans = current_user.loans
+
     respond_to do |format|
       format.html
       format.js

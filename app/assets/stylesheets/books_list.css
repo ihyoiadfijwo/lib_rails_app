@@ -1,0 +1,20 @@
+.books-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  margin-top: 16px;
+}
+.books-table th, .books-table td {
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+.books-table th {
+  background: #f0f0f0;
+}
+.books-table td {
+  vertical-align: middle;
+}
+.books-table .detail-link {
+  color: #007bff;
+  text-decoration: underline;
+}

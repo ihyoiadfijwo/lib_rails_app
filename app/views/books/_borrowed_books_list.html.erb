@@ -1,0 +1,25 @@
+<%= stylesheet_link_tag 'books_list', media: 'all' %>
+
+<table class="books-table">
+	<caption style="font-size: 24px; font-weight: bold">借りた本の一覧</caption>
+  <thead>
+    <tr>
+      <th>タイトル</th>
+      <th>借りた日時</th>
+      <th>返却締切</th>
+      <th>詳細</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% loans.each do |loan| %>
+      <tr>
+        <td><%= loan.book.title %></td>
+        <td><%= loan.borrowed_at %></td>
+        <td><%= loan.due_at %></td>
+        <td style="text-align: center;">
+          <%= link_to "詳細", book_path(loan.book), class: "detail-link" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

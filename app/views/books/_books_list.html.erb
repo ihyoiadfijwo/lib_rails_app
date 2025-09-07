@@ -1,6 +1,29 @@
-<% books.each do |book| %>
-  <div style="display: flex; align-items: center; margin-bottom: 8px;">
-    <%= render partial: "book", locals: { book: book } %>
-    <%= link_to "詳細", book_path(book), style: "margin-left: 16px;" %>
-  </div>
-<% end %>
+<%= stylesheet_link_tag 'books_list', media: 'all' %>
+
+<table class="books-table">
+  <caption style="font-size: 24px; font-weight: bold">本の一覧</caption>
+  <thead>
+    <tr>
+      <th>タイトル</th>
+      <th>著者</th>
+      <th>ISBN</th>
+      <th>カテゴリ</th>
+      <th>冊数</th>
+      <th>詳細</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% books.each do |book| %>
+      <tr>
+        <td><%= book.title %></td>
+        <td><%= book.author %></td>
+        <td><%= book.isbn %></td>
+        <td><%= book.category %></td>
+        <td style="text-align: right;"><%= book.total_copies %></td>
+        <td style="text-align: center;">
+          <%= link_to "詳細", book_path(book), class: "detail-link" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

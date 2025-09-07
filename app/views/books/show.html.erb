@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag 'show', media: 'all', 'data-turbolinks-track': "reload" %>
 <p style="color: green"><%= notice %></p>
 <p style="color: red"><%= alert %></p>
 
@@ -5,9 +6,9 @@
 
 <div>
   <% if @book.loans.exists?(user: current_user) %>
-    <%= button_to "返す", return_book_book_path(@book), method: :delete, class: "btn btn-secondary" %>
+    <%= button_to "返す", return_book_book_path(@book), method: :delete, class: "btn btn-return" %>
   <% else %>
-    <%= button_to "借りる", borrow_book_path(@book), method: :post, class: "btn btn-primary" %>
+    <%= button_to "借りる", borrow_book_path(@book), method: :post, class: "btn btn-borrow" %>
   <% end %>
 </div>
 
