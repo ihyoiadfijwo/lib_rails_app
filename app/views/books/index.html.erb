@@ -4,18 +4,20 @@
 
 <h1>Books</h1>
 
-<div style="margin-bottom: 24px; padding: 16px; border: 1px solid #ccc; border-radius: 8px; background: #f9f9f9; max-width: 600px;">
-  <%= form_with url: books_path, method: :get, local: false do |form| %>
-    <div style ="display: flex; align-items: center; gap: 12px;">
-      <%= form.text_field :q, value: params[:q], placeholder: "タイトル・著者で検索", style: "flex: 2; padding: 8px; border-radius: 4px; border: 1px solid #ccc;" %>
-      <%= form.select :category, options_for_select(@categories, params[:category]), include_blank: true, style: "flex: 1; padding: 8px; border-radius: 4px; border: 1px solid #ccc;" %>
-      <%= form.submit "検索", style: "flex: 0; padding: 8px 16px; border-radius: 4px; background: #007bff; color: #fff; border: none;" %>
-    </div>
-  <% end %>
-</div>
+<div style="padding: 16px; border: 1px solid #ccc; border-radius: 8px; background: #f9f9f9;">
+  <div style="margin-bottom: 24px; padding: 16px; border: 1px solid #ccc; border-radius: 8px; background: #f9f9f9; max-width: 600px;">
+    <%= form_with url: books_path, method: :get, local: false do |form| %>
+      <div style ="display: flex; align-items: center; gap: 12px;">
+        <%= form.text_field :q, value: params[:q], placeholder: "タイトル・著者で検索", style: "flex: 2; padding: 8px; border-radius: 4px; border: 1px solid #ccc;" %>
+        <%= form.select :category, options_for_select(@categories, params[:category]), include_blank: true, style: "flex: 1; padding: 8px; border-radius: 4px; border: 1px solid #ccc;" %>
+        <%= form.submit "検索", style: "flex: 0; padding: 8px 16px; border-radius: 4px; background: #007bff; color: #fff; border: none;" %>
+      </div>
+    <% end %>
+  </div>
 
-<div id="books_list">
-  <%= render partial: "books_list", locals: { books: @books } %>
+  <div id="books_list">
+    <%= render partial: "books_list", locals: { books: @books } %>
+  </div>
 </div>
 
 <div id="borrowed_books_list">

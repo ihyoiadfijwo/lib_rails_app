@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
-  before_action :authenticate_user!, :set_book, only: %i[ show edit update destroy borrow return_book]
+  before_action :set_book, only: %i[ show edit update destroy borrow return_book]
+  before_action :authenticate_user!
   protect_from_forgery except: :index
 
   # GET /books or /books.json
@@ -16,7 +17,7 @@ class BooksController < ApplicationController
       @books = Book.all
     end
 
-    @borrowed_loans = current_user.loans
+    @borrowed_loans = current_user.loans if current_user
 
     respond_to do |format|
       format.html
