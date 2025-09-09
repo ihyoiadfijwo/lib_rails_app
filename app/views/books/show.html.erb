@@ -2,19 +2,20 @@
 <p style="color: green"><%= notice %></p>
 <p style="color: red"><%= alert %></p>
 
-<%= render @book %>
+<h2 style="margin-left: 5%">書籍詳細</h2>
 
-<div>
-  <% if @book.loans.exists?(user: current_user) %>
-    <%= button_to "返す", return_book_book_path(@book), method: :delete, class: "btn btn-return" %>
-  <% else %>
-    <%= button_to "借りる", borrow_book_path(@book), method: :post, class: "btn btn-borrow" %>
-  <% end %>
+<div style="border: 1px solid #ccc; margin: 16px 5%; padding: 16px">
+  <%= render @book %>
+
+  <div class="button-group">
+    <%= button_to "借りる", borrow_book_path(@book), form: { class: "btn-form" },method: :post, class: "btn btn-borrow", disabled: @book.loans.exists?(user: current_user) %>
+    <%= button_to "返す", return_book_book_path(@book), form: { class: "btn-form" }, method: :delete, class: "btn btn-return", disabled: !@book.loans.exists?(user: current_user) %>
+  </div>
 </div>
 
-<div>
-  <%= link_to "Edit this book", edit_book_path(@book) %> |
-  <%= link_to "Back to books", books_path %>
-
-  <%= button_to "Destroy this book", @book, method: :delete %>
-</div>
+<% if current_user.role == "libadmin" %>
+  <div>
+    <%= link_to "本の編集", edit_book_path(@book) %>
+    <%= button_to "この本を削除する", @book, method: :delete %>
+  </div>
+<% end %>

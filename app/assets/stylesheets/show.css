@@ -25,3 +25,25 @@
 .btn-return:hover {
   background: #c82333;
 }
+
+.button-group {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+}
+.btn-form {
+  flex: 1;
+  display: flex;
+}
+.btn {
+  width: 100%;
+}
+
+.btn:disabled {
+  background: #6c757d;
+  cursor: default;
+}
+
+.btn:disabled:hover {
+  background: #6c757d;
+}
