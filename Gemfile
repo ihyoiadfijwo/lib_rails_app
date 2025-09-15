@@ -61,5 +61,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 
-gem "nokogiri", "1.18.7"
+gem "nokogiri", "1.18.10"
 end
