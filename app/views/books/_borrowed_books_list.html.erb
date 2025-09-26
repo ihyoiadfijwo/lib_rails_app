@@ -15,7 +15,24 @@
       <tr>
         <td><%= loan.book.title %></td>
         <td><%= loan.borrowed_at %></td>
-        <td><%= loan.due_at %></td>
+        <td>
+          <% remaining_days = ((loan.due_at.to_time - Time.now) / 1.day).to_i %>
+          <% remaining_hours = (((loan.due_at.to_time - Time.now) % 1.day) / 1.hour).to_i %>
+          <% remaining_minutes = (((loan.due_at.to_time - Time.now) % 1.hour) / 1.minute).to_i %>
+
+          <%= loan.due_at %> 
+          <% if remaining_days > 0 %>
+            <% if remaining_days < 1 %>
+              <span style="color: red;">本日までに返却！残り<%= remaining_hours %> 時間 <%= remaining_minutes %> 分</span>
+            <% elsif remaining_days < 3 %>
+              <span style="color: #f63;">残りわずか、<%= remaining_days %> 日後までに返却</span>
+            <% elsif remaining_days > 3 %>
+              <span style="color: green;"><%= remaining_days %> 日後までに返却</span>
+            <% end %>
+          <% else %>
+            <span style="color: red; font-weight: bold;">返却期限既に超過！速やかに返却してください！</span>
+          <% end %>
+        </td>
         <td style="text-align: center;">
           <%= link_to "詳細", book_path(loan.book), class: "detail-link" %>
         </td>
