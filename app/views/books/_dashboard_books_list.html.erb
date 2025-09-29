@@ -1,0 +1,41 @@
+<%= stylesheet_link_tag 'books_list', media: 'all' %>
+
+<table class="books-table">
+  <caption style="font-size: 24px; font-weight: bold">本の一覧</caption>
+  <thead>
+    <tr>
+      <th>タイトル</th>
+      <th>著者</th>
+      <th>ISBN</th>
+      <th>カテゴリ</th>
+      <th>冊数</th>
+      <th>詳細</th>
+      <th>編集</th>
+      <th>削除</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% books.each do |book| %>
+      <tr>
+        <td><%= book.title %></td>
+        <td><%= book.author %></td>
+        <td><%= book.isbn %></td>
+        <td><%= book.category %></td>
+        <td style="text-align: right;"><%= book.total_copies %></td>
+        <td style="text-align: center;">
+          <%= link_to "詳細", book_path(book), class: "detail-link" %>
+        </td>
+        <td style="text-align: center;">
+          <%= link_to "編集", edit_book_path(book), class: "edit_link" %>
+        </td>
+        <td style="text-align: center;">
+          <%= link_to "削除", book_path(book), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "delete_link" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div style="margin-top: 16px; text-align: right;">
+  <%= link_to "新規書籍の追加", new_book_path, class: "btn btn-primary", style: "padding: 8px 16px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px;" %>
+</div>

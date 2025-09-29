@@ -9,6 +9,10 @@ Rails.application.routes.draw do
       post :borrow
       delete :return_book
     end
+
+    collection do
+      get :dashboard
+    end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

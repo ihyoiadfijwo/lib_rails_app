@@ -25,6 +25,33 @@ class BooksController < ApplicationController
     end
   end
 
+  # GET /books/dashboard
+  def dashboard
+    unless current_user.role == "libadmin"
+      redirect_to books_path, alert: "アクセス権が確認できませんでした。"
+      return
+    end
+
+    @categories = Book.distinct.pluck(:category)
+
+    if params[:q].present? || params[:category].present?
+      query = params[:q]
+      category = params[:category]
+
+      @books = Book.where("title LIKE :query OR author LIKE :query", query: "%#{query}%")
+      @books = @books.where(category: category) if category.present?
+    else
+      @books = Book.all
+    end
+
+    @borrowed_loans = Loan.includes(:book, :user).where(returned_at: nil)
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
   # GET /books/1 or /books/1.json
   def show
     @book = Book.find(params[:id])
